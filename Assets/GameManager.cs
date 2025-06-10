@@ -15,18 +15,6 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     int score = 0;
 
-
-   // void GetZombieLeft()
-   //{
-    //    if (selectedZombiePosition == 0)
-   //     {
-   //         SelectZombie(zombies[3]);
-    //    }
-    //    else
-    //    {
-    //        SelectZombie(zombies[selectedZombiePosition - 1]);
-    //    }
-    //}
        void GetZombieLeft()
     {
         selectedZombiePosition--;
