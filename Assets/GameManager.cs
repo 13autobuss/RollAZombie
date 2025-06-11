@@ -13,17 +13,20 @@ public class GameManager : MonoBehaviour
     public Vector3 selectedSize;
     public Vector3 defaultSize;
     public TMP_Text scoreText;
-    int score = 0;
+    public TMP_Text gameOver;
+    public int score = 0;
 
-       void GetZombieLeft()
+    public bool gameOn = true;
+
+    void GetZombieLeft()
     {
         selectedZombiePosition--;
         if (selectedZombiePosition < 0)
         {
             selectedZombiePosition = zombies.Length - 1;
         }
-            SelectZombie(zombies[selectedZombiePosition]);
-        
+        SelectZombie(zombies[selectedZombiePosition]);
+
     }
 
     void GetZombieRight()
@@ -33,8 +36,8 @@ public class GameManager : MonoBehaviour
         {
             selectedZombiePosition = 0;
         }
-            SelectZombie(zombies[selectedZombiePosition]);
-        
+        SelectZombie(zombies[selectedZombiePosition]);
+
     }
 
 
@@ -44,9 +47,9 @@ public class GameManager : MonoBehaviour
         {
             selectedZombie.transform.localScale = defaultSize;
         }
-            selectedZombie = newZombie;
-            selectedZombie.transform.localScale = selectedSize;
-            selectedZombiePosition = Array.IndexOf(zombies, newZombie);
+        selectedZombie = newZombie;
+        selectedZombie.transform.localScale = selectedSize;
+        selectedZombiePosition = Array.IndexOf(zombies, newZombie);
     }
 
     void Update()
@@ -63,6 +66,11 @@ public class GameManager : MonoBehaviour
         GameObject newZombie = zombies[0];
         SelectZombie(newZombie);
         scoreText.text = "Score: " + score;
+
+        if (gameOver != null)
+        {
+            gameOver.SetActive(false);
+        }
     }
 
     void PushUp()
@@ -75,5 +83,27 @@ public class GameManager : MonoBehaviour
         score = score + 1;
         scoreText.text = "Score: " + score;
     }
+
+    public void GameEnd()
+    {
+        if (zombies.Length = 0)
+        {
+            gameOn = false;
+            gameOver.SetActive(true);
+
+        }
+        else
+        {
+            gameOn = true;
+         }
+     }
+
+    // public void Zomb()
+    // {
+    //     if (zombies < 1 && totalTime = 0)
+    //     {
+
+    //     }
+    // }
 
 }
