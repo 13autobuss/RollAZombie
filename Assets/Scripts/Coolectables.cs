@@ -4,7 +4,7 @@ using System.Collections;
 public class Coolectables : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
-    public GameObject[] zombies;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Collect"))

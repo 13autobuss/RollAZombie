@@ -7,7 +7,8 @@ public class fightingforlife : MonoBehaviour
     {
         if (other.CompareTag("Death"))
         {
-            Destroy(gameObject);
+            GameManager.gameManagerStatic.zombieCount -= 1;
+            this.gameObject.SetActive(false);
         }
     }
 }

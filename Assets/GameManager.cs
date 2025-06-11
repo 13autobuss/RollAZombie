@@ -2,10 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using TMPro;
-//using System.Collections;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gameManagerStatic;
+
     int selectedZombiePosition = 0;
     public GameObject selectedZombie;
     //public List<GameObject> zombies = new List<GameObject>(); 
@@ -13,10 +16,40 @@ public class GameManager : MonoBehaviour
     public Vector3 selectedSize;
     public Vector3 defaultSize;
     public TMP_Text scoreText;
-    public TMP_Text gameOver;
+    public GameObject gameOver;
     public int score = 0;
+    public int zombieCount = 4;
 
     public bool gameOn = true;
+
+void Start()
+    {
+        
+        gameManagerStatic = this;
+        
+        GameObject newZombie = zombies[0];
+        SelectZombie(newZombie);
+        scoreText.text = "Score: " + score;
+
+        if (gameOver != null)
+        {
+            gameOver.SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        if(zombieCount == 0)
+        {
+            GameEnd();
+        }
+        if (Input.GetKeyDown("left")) GetZombieLeft();
+
+        if (Input.GetKeyDown("right")) GetZombieRight();
+
+        if (Input.GetKeyDown("up")) PushUp();
+        
+    }
 
     void GetZombieLeft()
     {
@@ -40,7 +73,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     void SelectZombie(GameObject newZombie)
     {
         if (selectedZombie != null)
@@ -50,27 +82,6 @@ public class GameManager : MonoBehaviour
         selectedZombie = newZombie;
         selectedZombie.transform.localScale = selectedSize;
         selectedZombiePosition = Array.IndexOf(zombies, newZombie);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown("left")) GetZombieLeft();
-
-        if (Input.GetKeyDown("right")) GetZombieRight();
-
-        if (Input.GetKeyDown("up")) PushUp();
-    }
-
-    void Start()
-    {
-        GameObject newZombie = zombies[0];
-        SelectZombie(newZombie);
-        scoreText.text = "Score: " + score;
-
-        if (gameOver != null)
-        {
-            gameOver.SetActive(false);
-        }
     }
 
     void PushUp()
@@ -86,24 +97,15 @@ public class GameManager : MonoBehaviour
 
     public void GameEnd()
     {
-        if (zombies.Length = 0)
-        {
-            gameOn = false;
-            gameOver.SetActive(true);
-
-        }
-        else
-        {
-            gameOn = true;
-         }
+    
+        gameOn = false;
+        gameOver.SetActive(true);
+       
      }
 
-    // public void Zomb()
-    // {
-    //     if (zombies < 1 && totalTime = 0)
-    //     {
-
-    //     }
-    // }
+     public void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
 }

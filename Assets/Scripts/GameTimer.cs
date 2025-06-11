@@ -1,31 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 using TMPro;
 
 public class GameTimer : MonoBehaviour
 {
-    public float totalTime = 5f;
+    public float currentTime = 0f;
+    [SerializeField] private GameManager gameManager;
     public TMP_Text timerText;
 
     void Update()
     {
-        //float minutes = Mathf.FloortoInt(totalTime / 60);
-        //float seconds = Mathf.FloortoInt(totalTime % 60);
-
-        //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-        if (totalTime >= 0f)
+        if(gameManager.gameOn)
         {
-            totalTime -= Time.deltaTime;
-            timerText.text = (totalTime).ToString("0");
-            timerEnded();
+            currentTime += 1 * Time.deltaTime;
+            
         }
-    }
+        TimeSpan time = TimeSpan.FromSeconds(currentTime);
 
-    private void timerEnded()
-    {
-
+         timerText.text = time.Minutes.ToString("00") + ":" + time.Seconds.ToString("00");
     }
  
 }

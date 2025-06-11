@@ -5,23 +5,27 @@ public class Spawner : MonoBehaviour
 {
     public GameObject collectible;
     private float spawnRange = 10;
+    [SerializeField] private GameObject[] spawnPoints;
+    private int index;
 
-    private IEnumerator Spawnerr()
+    private void Start()
     {
-        //while (true)
-        //{
-        Instantiate(collectible, new Vector3(16,3,-11), collectible.transform.rotation);
-            //Instantiate(collectible, GenerateSpawnPos(), Quaternion.identity);
-        yield return new WaitForSeconds(1);
-        //}
+        StartCoroutine(Spawnerr());
     }
 
-    private Vector3 GenerateSpawnPos()
+    private IEnumerator Spawnerr()
+    { 
+        index = Random.Range(0, 3);
+        Instantiate(collectible, spawnPoints[index].transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(5);
+    }
+
+    /*private Vector3 GenerateSpawnPos()
     {
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
         Vector3 randomPos = new Vector3(spawnPosX, 1, spawnPosZ);
         return randomPos;
-    }
+    }*/
 
 }
